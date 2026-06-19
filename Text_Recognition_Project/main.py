@@ -6,9 +6,7 @@ import pandas as pd
 pytesseract.pytesseract.tesseract_cmd = \
 r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-# =====================================================
-# LOAD IMAGE
-# =====================================================
+
 
 image = cv2.imread("sample.jpg")
 
@@ -18,9 +16,9 @@ if image is None:
 
 output_image = image.copy()
 
-# =====================================================
+
 # IMAGE PREPROCESSING
-# =====================================================
+
 
 gray = cv2.cvtColor(
     image,
@@ -55,9 +53,9 @@ print("EXTRACTED TEXT")
 print("=" * 50)
 print(text)
 
-# =====================================================
+
 # OCR WORD DATA
-# =====================================================
+
 
 ocr_data = pytesseract.image_to_data(
     thresh,
@@ -106,9 +104,9 @@ for i in range(len(ocr_data["text"])):
             1
         )
 
-# =====================================================
+
 # OCR STATISTICS
-# =====================================================
+
 
 if len(confidences) > 0:
     avg_ocr_conf = sum(confidences) / len(confidences)
@@ -122,9 +120,9 @@ print("=" * 50)
 print(f"Total Words : {len(words)}")
 print(f"Average OCR Confidence : {avg_ocr_conf:.2f}%")
 
-# =====================================================
+
 # OCR CONFIDENCE TABLE
-# =====================================================
+
 
 df = pd.DataFrame({
     "Word": words,
@@ -134,9 +132,9 @@ df = pd.DataFrame({
 print("\nWORD CONFIDENCE TABLE\n")
 print(df)
 
-# =====================================================
+
 # SAVE OCR TEXT
-# =====================================================
+
 
 with open(
     "extracted_text.txt",
@@ -146,9 +144,9 @@ with open(
 
     file.write(text)
 
-# =====================================================
+
 # MOBILENET SSD OBJECT DETECTION
-# =====================================================
+
 
 CLASSES = [
     "background",
@@ -246,9 +244,7 @@ for i in range(detections.shape[2]):
             2
         )
 
-# =====================================================
 # FINAL STATS
-# =====================================================
 
 print("\n" + "=" * 50)
 print("FINAL REPORT")
@@ -258,9 +254,7 @@ print(f"Words Detected      : {len(words)}")
 print(f"OCR Confidence      : {avg_ocr_conf:.2f}%")
 print(f"Objects Detected    : {object_count}")
 
-# =====================================================
 # SAVE OUTPUT
-# =====================================================
 
 cv2.imwrite(
     "output.jpg",
@@ -269,10 +263,7 @@ cv2.imwrite(
 
 print("\noutput.jpg saved")
 print("extracted_text.txt saved")
-
-# =====================================================
 # DISPLAY
-# =====================================================
 
 cv2.imshow(
     "Final Output",
